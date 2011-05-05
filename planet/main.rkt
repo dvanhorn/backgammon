@@ -1,5 +1,5 @@
 #lang racket
-(provide play serve-couples serve-singles)
+(provide play serve-couples serve-singles serve1 serve2)
 
 (require planet/version
          (this-package-in backgammon)
@@ -24,3 +24,4 @@
     (on-mouse clean-squeek)
     (on-key peck)
     (on-receive slurp)))
+

@@ -31,11 +31,46 @@ These instructions assume you know the rules of Backgammon.
 You can either play in singles or couples mode.  In either case, 
 you need to run a "Backgammon Server".
 
+From the command line:
+
+Single player mode (starts server and plays):
+@verbatim{
+   racket -p dvanhorn/backgammon/self
+}
+
+Play:
+@verbatim{
+   racket -p dvanhorn/backgammon/play <name>
+   racket -p dvanhorn/backgammon/play -- [--ip <addr>] <name>
+}
+
+Serve 1 player mode:
+@verbatim{
+   racket -p dvanhorn/backgammon/serve1
+}
+Serve 2 player mode:
+@verbatim{
+   racket -p dvanhorn/backgammon/serve2
+}
+
+Example 2 player game on localhost:
+@verbatim{
+   racket -p dvanhorn/backgammon/serve2 &
+   racket -p dvanhorn/backgammon/play Mary &
+   racket -p dvanhorn/backgammon/play Jane &
+}
+
 @defproc[(serve-singles) thread?]{
-Serve single (self-playing) games.}
+Spawn a thread serving single (self-playing) games.}
 
 @defproc[(serve-couples) thread?]{
-Serve coupled games, pairing together players on a first-come, first-served basis.}
+Spawn a thread serving coupled games, pairing together players on a first-come, first-served basis.}
+
+@defproc[(serve1) any/c]{
+Serve single (self-playing) games.}
+
+@defproc[(serve2) any/c]{
+Serve coupled games.}
 
 @defproc[(play [name string?] [#:IP ip LOCALHOST string?]) any/c]{
 Play a game under the given player name using the Backagammon

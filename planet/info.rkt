@@ -7,7 +7,7 @@
 (define primary-file 
   '("main.rkt"))
 (define blurb
-  (list '(div "Backgammon game and server.")))
+  (list '(div "Rackgammon: Backgammon for Racket.")))
 (define release-notes 
   (list
-   '(div "Updated for 5.1.1.")))
+   '(div "Updated for 5.1.1.  Added command line launchers.")))

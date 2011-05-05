@@ -10,21 +10,22 @@
          (cons (first ls)
                (remf f (rest ls)))]))
 
+(define (serve1)
+  (universe '*
+	    (on-new 
+	     (λ (is iw)
+		(make-bundle '* (list (make-mail iw '(initial))) empty)))
+	    (on-msg
+	     (λ (is iw msg)
+		(make-bundle '* 
+			     (cond [(equal? msg '(passive))
+				    (list (make-mail iw '(active)))]
+				   [else empty])
+			     empty)))))
+
 ;; Serves single player (self-playing) games.
 (define (serve-singles)
-  (thread
-   (λ ()
-     (universe '*
-               (on-new 
-                (λ (is iw)
-                  (make-bundle '* (list (make-mail iw '(initial))) empty)))
-               (on-msg
-                (λ (is iw msg)
-                  (make-bundle '* 
-                               (cond [(equal? msg '(passive))
-                                      (list (make-mail iw '(active)))]
-                                     [else empty])
-                               empty)))))))
+  (thread serve1))
 
 ;; Serves two play games, pairing off incoming couples first come, first served.
 
@@ -32,25 +33,27 @@
 ;; The first world is the active world, the second is the passive.
 (define-struct u (loner pairs))
 
+(define (serve2)
+  (universe (make-u #f empty)
+	    (on-new (λ (us iw)
+		       (if (u-loner us)
+			   (make-bundle (make-u #f (cons (list (u-loner us) iw)
+							 (u-pairs us)))
+					(list (make-mail (u-loner us) '(initial)))
+					empty)
+			   (make-bundle (make-u iw (u-pairs us))
+					empty
+					empty))))
+	    
+	    
+	    (on-msg (λ (us iw msg)
+		       (cond [(equal? msg '(passive))
+			      (flip-play us iw)]
+			     [(equal? (first msg) 'moment)
+			      (notify-moment us iw (second msg))])))))
+
 (define (serve-couples)
-  (thread (λ ()
-            (universe (make-u #f empty)
-                      (on-new (λ (us iw)
-                                (if (u-loner us)
-                                    (make-bundle (make-u #f (cons (list (u-loner us) iw)
-                                                                  (u-pairs us)))
-                                                 (list (make-mail (u-loner us) '(initial)))
-                                                 empty)
-                                    (make-bundle (make-u iw (u-pairs us))
-                                                 empty
-                                                 empty))))
-                      
-                      
-                      (on-msg (λ (us iw msg)
-                                (cond [(equal? msg '(passive))
-                                       (flip-play us iw)]
-                                      [(equal? (first msg) 'moment)
-                                       (notify-moment us iw (second msg))])))))))
+  (thread serve2))
 
 ;; IWorld [Listof (list IWorld IWorld)] -> IWorld
 (define (pair-partner iw pairs)
