@@ -16,7 +16,7 @@
    For M.M.
 |#
 (provide (all-defined-out))
-(require (planet cce/scheme:7:1/planet))
+(require planet/version)
 (require (planet dvanhorn/typed:1:5/util)
          (planet dvanhorn/typed:1:5/list)
          (planet dvanhorn/typed:1:5/2htdp/image))

@@ -1,8 +1,8 @@
 #lang racket
 (provide play serve-couples serve-singles)
 
-(require (planet cce/scheme:7/planet))
-(require (this-package-in backgammon)
+(require planet/version
+         (this-package-in backgammon)
          (this-package-in server)
          (this-package-in private/test))
 

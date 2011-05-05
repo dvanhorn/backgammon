@@ -1,7 +1,7 @@
 #lang racket
 (provide (all-defined-out))
-(require (planet cce/scheme:7/planet)
-         test-engine/scheme-tests
+(require planet/version
+         test-engine/racket-tests
          (this-package-in backgammon))
 
 ;;======================================================================

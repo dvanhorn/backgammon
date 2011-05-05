@@ -1,8 +1,8 @@
 #lang scribble/doc
 @(require scribble/manual
           planet/util
-          (planet cce/scheme:7:1/planet)
-          (planet cce/scheme:7:1/scribble)
+          planet/version
+          planet/scribble
           (for-label (for-label (this-package-in main)))
           (for-label 2htdp/universe)
           (for-label racket))
