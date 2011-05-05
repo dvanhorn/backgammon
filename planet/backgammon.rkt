@@ -16,10 +16,9 @@
    For M.M.
 |#
 (provide (all-defined-out))
-(require planet/version)
-(require (planet dvanhorn/typed:1:5/util)
-         (planet dvanhorn/typed:1:5/list)
-         (planet dvanhorn/typed:1:5/2htdp/image))
+(require (planet dvanhorn/typed/util)
+         (planet dvanhorn/typed/list)
+         (planet dvanhorn/typed/2htdp/image))
 
 ;;======================================================================
 ;; Description
@@ -276,11 +275,11 @@
 ;; Rendering
 
 ;; Radius and diameter of Checker image
-(define CRADIUS 20)
+(define: CRADIUS : Integer 20)
 (define CDIAM (* 2 CRADIUS))
 
 (define DIE-SIZE (* 2 CRADIUS))
-(define BRADIUS 5)
+(define: BRADIUS : Integer 5)
 
 (define BORDER-CLR 'darkslateblue)
 (define FLOOR-CLR 'slateblue)
